@@ -1,4 +1,7 @@
 ![alt text](doc/logo.png)
+<p align="center">
+  <img src="me/logo.png" alt="Wildfire logo" width="200">
+</p>
 
 # 🔥 Wildfire
 
