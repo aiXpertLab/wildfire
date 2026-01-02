@@ -1,3 +1,5 @@
+![alt text](doc/logo.png)
+
 # 🔥 Wildfire
 
 **Wildfire is an agentic execution framework that rapidly propagates reasoning, actions, and state across tools, models, and workflows.**
