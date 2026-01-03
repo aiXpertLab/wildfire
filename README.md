@@ -1,9 +1,7 @@
-![alt text](doc/logo.png)
 <p align="center">
   <img src="me/logo.png" alt="Wildfire logo" width="200">
 </p>
 
-# 🔥 Wildfire
 
 **Wildfire is an agentic execution framework that rapidly propagates reasoning, actions, and state across tools, models, and workflows.**
 
@@ -78,3 +76,5 @@ agent = Agent(
 
 workflow = Workflow(agent)
 workflow.run(input="Investigate market trends and produce a summary report")
+
+# 🔥 Wildfire
