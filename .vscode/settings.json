@@ -4,7 +4,7 @@
         ".gitignore": true,
         ".github": true,
         ".vscode": true,
-		".angular":true,
+		".venv":true,
 		"e2e":true,
         "LICENSE": true,
         ".eslintrc.cjs": true,
