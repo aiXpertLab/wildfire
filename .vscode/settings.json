@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "__init__.py": true,
+        "**/__pycache__": true,
         ".gitignore": true,
         ".github": true,
         ".vscode": true,
