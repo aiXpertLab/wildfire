@@ -20,7 +20,8 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     settings = get_settings_singleton()
-    
+    print("--------------DB URL USED:", settings.PG_ASYNC)
+
     app = FastAPI(
         title=settings.PROJECT_NAME,
         version=settings.VERSION,
