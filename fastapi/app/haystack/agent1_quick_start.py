@@ -7,6 +7,9 @@ from haystack.dataclasses import ChatMessage
 from haystack.tools import ComponentTool
 from haystack.components.websearch import SerperDevWebSearch
 
+import logging
+logger = logging.getLogger(__name__)
+
 from app.config import get_settings_singleton
 settings = get_settings_singleton()
 
@@ -25,6 +28,8 @@ def run_agent(user_message: str) -> str:
     """
     Executes the Haystack agent and returns the final text response.
     """
+    logger.info("Haystack user message: %r", user_message)
+
     result = agent.run(
         messages=[ChatMessage.from_user(user_message)]
     )
