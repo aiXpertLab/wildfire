@@ -18,6 +18,7 @@ class _Settings(BaseSettings):
     DB_ECHO: bool = False
 
     OPENAI_API_KEY: Optional[str] = None
+    SERPERDEV_API_KEY: Optional[str] = None
 
     # Seed Data
     SEED_DATA: bool = True  # Whether to seed data on startup

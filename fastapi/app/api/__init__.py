@@ -9,11 +9,12 @@ from fastapi import APIRouter, Depends
 # from app.api.r_rag import ragRou
 # from app.api.r_report import reportRou
 # from app.api.r_invoice import invRou
-# from app.api.r_user import userRou
+from app.api.haystack import hsRou
 
 rou = APIRouter()
 
 # rou.include_router(userRou)
+rou.include_router(hsRou, prefix="/haystack", tags=["Haystack"])
 # rou.include_router(invRou, prefix="/invoice", tags=["Invoice"])
 # rou.include_router(reportRou, prefix="/reports", tags=["Reports"])
 # rou.include_router(ragRou, prefix="/rag", tags=["RAG"])
