@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends
 # from app.api.r_rag import ragRou
 # from app.api.r_report import reportRou
 # from app.api.r_invoice import invRou
-from app.api.haystack import hsRou
+from app.api.rou_haystack import hsRou
 
 rou = APIRouter()
 
