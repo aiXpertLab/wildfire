@@ -20,24 +20,26 @@ Social_smoker, Pet, Weight, Height, Body_mass_index,
 Absenteeism_time_in_hours
 """
 
+
 class SQLAgentService:
     def __init__(self, pg_conn_str: str):
         self.sql_executor = SQLQuery(pg_conn_str)
 
         self.prompt = PromptBuilder(
             template="""
-Generate a single valid PostgreSQL SQL query.
+                Generate a single valid PostgreSQL SQL query.
 
-Question:
-{{ question }}
+                Question:
+                {{ question }}
 
-Table: absenteeism
+                Table: absenteeism
 
-Columns:
-{{ columns }}
+                Columns:
+                {{ columns }}
 
-Return ONLY the SQL query. No explanation.
-"""
+                Return ONLY the SQL query. No explanation.
+                """,
+            required_variables=["question", "columns"],  # <-- add this line
         )
 
         self.llm = OpenAIGenerator(model="gpt-4o-mini")
