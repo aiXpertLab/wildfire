@@ -1,16 +1,18 @@
 # hs.py
 import os
 
+from haystack.tools import Tool, ComponentTool
 from haystack.components.agents import Agent
 from haystack.components.generators.chat import OpenAIChatGenerator
-from haystack.components.retrievers import EmbeddingRetriever
+from haystack_integrations.components.retrievers.pgvector import PgvectorEmbeddingRetriever
 from haystack.dataclasses import ChatMessage
-from haystack.tools import ComponentTool
 from haystack.components.websearch import SerperDevWebSearch
 from haystack_integrations.document_stores.pgvector import PgvectorDocumentStore
 from haystack import Document
 
 import logging
+
+from app.haystack.iv.iv_singleton import get_ivservice
 logger = logging.getLogger(__name__)
 
 from app.config import get_settings_singleton
@@ -31,17 +33,20 @@ search_tool = ComponentTool(
 document_store = PgvectorDocumentStore(
     connection_string=settings.PG_ASYNC,
     table_name="haystack_documents",      # must match your existing table
-    embedding_dim=384            # must match stored embeddings
+    embedding_dimension=384            # must match stored embeddings
 )
 
-retriever = EmbeddingRetriever(
+retriever = PgvectorEmbeddingRetriever(
     document_store=document_store
 )
 
-pgvector_tool = ComponentTool(
-    component=retriever,
+ivservice = get_ivservice()
+
+# Use Tool class for pipelines, not ComponentTool
+pgvector_tool = Tool.from_pipeline(
+    pipeline=ivservice.pipeline,
     name="internal_search",
-    description="Search internal deal data stored in pgvector."
+    description="Search internal company and deal data from database."
 )
 
 # -------- AGENT SETUP --------
