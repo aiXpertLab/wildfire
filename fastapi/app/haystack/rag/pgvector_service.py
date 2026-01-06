@@ -28,7 +28,7 @@ class PgVectorSearchService:
 
         self.document_store = PgvectorDocumentStore(
             table_name="hs_pgvector_documents",
-            embedding_dimension=768,
+            embedding_dimension=384,
             vector_function="cosine_similarity",
             recreate_table=True,
             hnsw_index_name="hs_pgvector_hnsw_idx_01",
@@ -83,7 +83,17 @@ class PgVectorSearchService:
 
         self.pipeline = pipeline
 
-    def search(self, query: str, top_k: int = 1) -> list[str]:
+    # def search(self, query: str, top_k: int = 1) -> list[str]:
+    #     result = self.pipeline.run(
+    #         {
+    #             "text_embedder": {"text": query},
+    #             "retriever": {"top_k": top_k},
+    #         }
+    #     )
+
+    #     return [doc.content for doc in result["retriever"]["documents"]]
+
+    def search(self, query: str, top_k: int = 5):
         result = self.pipeline.run(
             {
                 "text_embedder": {"text": query},
@@ -91,4 +101,5 @@ class PgVectorSearchService:
             }
         )
 
-        return [doc.content for doc in result["retriever"]["documents"]]
+        # ✅ return Document objects, not strings
+        return result["retriever"]["documents"]

@@ -74,18 +74,3 @@ def run_agent(user_message: str) -> str:
     return result["last_message"].text
 
 
-
-
-
-# document_store = PgvectorDocumentStore(
-#     embedding_dimension=768,
-#     vector_function="cosine_similarity",
-#     recreate_table=True,
-#     search_strategy="hnsw",
-# )
-
-# document_store.write_documents([
-#     Document(content="This is first", embedding=[0.1]*768),
-#     Document(content="This is second", embedding=[0.3]*768)
-#     ])
-# print(document_store.count_documents())
