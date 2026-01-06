@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 
 from app.config import get_settings_singleton
 settings = get_settings_singleton()
-
 os.environ["SERPERDEV_API_KEY"] = settings.SERPERDEV_API_KEY
 os.environ["OPENAI_API_KEY"] = settings.OPENAI_API_KEY
+
 search_tool = ComponentTool(component=SerperDevWebSearch())
 
 agent = Agent(
