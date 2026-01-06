@@ -13,6 +13,7 @@ from app.api.rou_hs_agent import hsRouAgent
 from app.api.rou_hs_rag import hsRouRag
 from app.api.rou_hs_sql import hsRouSQL
 
+
 rou = APIRouter()
 
 # rou.include_router(userRou)
