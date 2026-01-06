@@ -4,6 +4,8 @@ from haystack import component
 from sqlalchemy import create_engine, text
 import pandas as pd
 
+from app.utils.sanitize import clean_sql
+
 @component
 class SQLQuery:
     def __init__(self, pg_conn_str: str):
@@ -12,8 +14,13 @@ class SQLQuery:
     @component.output_types(results=List[str], queries=List[str])
     def run(self, queries: List[str]):
         results = []
+        cleaned_queries = []
+
         with self.engine.connect() as conn:
             for query in queries:
-                df = pd.read_sql(text(query), conn)
+                q = clean_sql(query)
+                df = pd.read_sql(text(q), conn)
                 results.append(df.to_string(index=False))
-        return {"results": results, "queries": queries}
+                cleaned_queries.append(q)
+
+        return {"results": results, "queries": cleaned_queries}
