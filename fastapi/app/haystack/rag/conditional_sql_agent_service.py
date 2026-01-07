@@ -24,20 +24,20 @@ class ConditionalSQLAgentService:
 
         self.prompt = PromptBuilder(
             template="""
-Please generate an SQL query.
+                Please generate an SQL query.
 
-Question:
-{{ question }}
+                Question:
+                {{ question }}
 
-If the question cannot be answered using the table and columns below,
-return exactly: no_answer
+                If the question cannot be answered using the table and columns below,
+                return exactly: no_answer
 
-Table: absenteeism
-Columns:
-{{ columns }}
+                Table: absenteeism
+                Columns:
+                {{ columns }}
 
-Return ONLY SQL or no_answer.
-"""
+                Return ONLY SQL or no_answer.
+                """
         )
 
         self.llm = OpenAIGenerator(model="gpt-4o-mini")

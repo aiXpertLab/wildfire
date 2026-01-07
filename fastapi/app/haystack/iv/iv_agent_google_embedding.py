@@ -10,7 +10,6 @@ from haystack.dataclasses import ChatMessage
 
 from app.config import get_settings_singleton
 from app.haystack.iv.iv_search_component import IVSemanticSearchComponent
-from app.haystack.iv.iv_sql_component import IVSQLSearchComponent
 
 logger = logging.getLogger(__name__)
 
@@ -40,37 +39,22 @@ iv_search_tool = ComponentTool(
     description="Search internal company and deal data using vector similarity."
 )
 
-sql_search_tool = ComponentTool(
-    component=IVSQLSearchComponent(),
-    name="sql_search",
-    description=(
-        "Use this tool ONLY for exact, structured queries on reports data. "
-        "Examples: account_id, company, first_name, last_name, lead_owner, "
-        "deal_stage, source, or recent records. "
-        "Do NOT use for semantic similarity or vague questions."
-    ),
-)
 # ---------------------------------------------------------------------
 # AGENT
 # ---------------------------------------------------------------------
+
 agent = Agent(
     chat_generator=OpenAIChatGenerator(model="gpt-4o-mini"),
     system_prompt=(
-        "You are a routing assistant.\n"
-        "Routing rules:\n"
-        "- Use sql_search for EXACT, structured queries on reports "
-        "(ID, first_name, last_name, company, deal_stage, lead_owner, source, account_id, dates).\n"
-        "- Use internal_search for semantic or fuzzy meaning-based search.\n"
-        "- Use web_search only for fresh external information.\n"
-        "If sql_search returns results, prefer them."
+        "You are a helpful assistant.\n"
+        "Use internal_search for internal company or deal data.\n"
+        "Use web_search only if internal data is insufficient or needs to be fresh."
     ),
     tools=[
-        sql_search_tool,
-        iv_search_tool,
         search_tool,
+        iv_search_tool,
     ],
 )
-
 
 # ---------------------------------------------------------------------
 # RUNNER
@@ -85,5 +69,10 @@ def run_agent(user_message: str) -> str:
     result = agent.run(
         messages=[ChatMessage.from_user(user_message)]
     )
+
+    for log in result.get("tool_logs", []):
+        logger.info("Tool used: %s", log.get("tool_name"))
+        logger.info("Tool input: %s", log.get("tool_input"))
+        logger.info("Tool output: %s", log.get("tool_output"))
 
     return result["last_message"].text

@@ -73,7 +73,6 @@ def iv_dispatch(request: AgentDispatchRequest):
     logger.info("User query received: %r", request.query)
 
     result = agent.run(messages=[ChatMessage.from_user(request.query)])
-    logger.info("----------------Agent tool logs: %r", result)
 
     tool_logs = result.get("tool_logs", [])
     
