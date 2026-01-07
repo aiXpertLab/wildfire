@@ -2,17 +2,14 @@
 from datasets import load_dataset
 from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
-from haystack.components.embedders import (
-    SentenceTransformersDocumentEmbedder,
-    SentenceTransformersTextEmbedder,
-)
+from haystack.components.embedders import SentenceTransformersDocumentEmbedder,SentenceTransformersTextEmbedder
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders import ChatPromptBuilder
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.dataclasses import ChatMessage
 
 
-class RAGService:
+class RAGService4InMemory:
     def __init__(self):
         self.document_store = InMemoryDocumentStore()
         self.pipeline = None
@@ -55,16 +52,16 @@ class RAGService:
         template = [
             ChatMessage.from_user(
                 """
-Given the following information, answer the question.
+                    Given the following information, answer the question.
 
-Context:
-{% for document in documents %}
-{{ document.content }}
-{% endfor %}
+                    Context:
+                    {% for document in documents %}
+                    {{ document.content }}
+                    {% endfor %}
 
-Question: {{ question }}
-Answer:
-"""
+                    Question: {{ question }}
+                    Answer:
+                """
             )
         ]
 
@@ -78,9 +75,7 @@ Answer:
         pipeline.add_component("prompt_builder", prompt_builder)
         pipeline.add_component("llm", llm)
 
-        pipeline.connect(
-            "text_embedder.embedding", "retriever.query_embedding"
-        )
+        pipeline.connect("text_embedder.embedding", "retriever.query_embedding")
         pipeline.connect("retriever", "prompt_builder")
         pipeline.connect("prompt_builder.prompt", "llm.messages")
 

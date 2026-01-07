@@ -1,18 +1,14 @@
 from pydantic import BaseModel
 
-class AllRequestString(BaseModel):
-    query: str
-
-
 class HumanQuery(BaseModel):
     query: str
-    top_k: int = 5
+    top_k: int = 50
+
+class ResultString(BaseModel):
+    result: str
 
 
-class AgentResponseString(BaseModel):
-    answer: str
-
-class SQLAgentResponseList(BaseModel):
+class ResultList(BaseModel):
     results: list[dict]  # list of dicts from SQL query
     
     
