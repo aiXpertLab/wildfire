@@ -19,14 +19,16 @@ def iv_dispatch(request: AgentDispatchRequest):
     """
     Dispatch query to agent and return tool results if internal_search is used.
     """
-    logger.info("User query received: %r", request.query)
+    logger.info("-----------------User query received: %r", request.query)
 
     result = agent.run(
         messages=[ChatMessage.from_user(request.query)]
     )
+    
+    logger.info("Tool logs count: %d", len(result.get("tool_logs", [])))
+    logger.info("==============: %s", result)
 
     tool_logs = result.get("tool_logs", [])
-    logger.info("----------------Agent tool logs: %r", tool_logs)
 
     internal_docs: list[Document] = []
 
@@ -65,30 +67,3 @@ def iv_dispatch(request: AgentDispatchRequest):
         "tool": "none",
         "answer": result["last_message"].text,
     }
-
-
-
-@hsRouDispatch.post("/iv_dispatch2")
-def iv_dispatch(request: AgentDispatchRequest):
-    logger.info("User query received: %r", request.query)
-
-    result = agent.run(messages=[ChatMessage.from_user(request.query)])
-    logger.info("----------------Agent tool logs: %r", result)
-
-    tool_logs = result.get("tool_logs", [])
-    
-    route = result["messages"][2]._content[0].tool_name if result["messages"][2]._content else "openai"
-
-    # if tool_logs:
-    #     route = tool_logs[0].get("tool_name", "openai")
-
-    return {
-        "query": request.query,
-        "route": route,
-        "answer": result["last_message"],
-    }
-
-
-# "Explain the concept of vector embeddings in simple terms."
-# "Show me the latest deal info for Acme Corp"
-# "What are the latest news headlines about OpenAI?"
