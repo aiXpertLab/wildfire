@@ -14,7 +14,7 @@ from app.api.rou_hs_rag import hsRouRag
 from app.api.rou_hs_sql import hsRouSQL
 from app.api.rou_iv1_semantic_search import hsRouSemantic
 from app.api.rou_iv2_agent_dispatch import hsRouDispatch
-from app.api.rou_iv3_agent_sql_emb_google import hsRouSqlEmbGoogle
+from app.api.rou_iv_final import hsRouSqlEmbGoogle
 
 # from app.api.sync import syncRouter
 
@@ -26,7 +26,7 @@ rou.include_router(hsRouAgent, prefix="/agent", tags=["Haystack"])
 rou.include_router(hsRouSQL, prefix="/sql", tags=["Haystack"])
 rou.include_router(hsRouSemantic, prefix="/semantic_search", tags=["Haystack"])
 rou.include_router(hsRouDispatch, prefix="/iv_agent_dispatch", tags=["Haystack"])
-rou.include_router(hsRouSqlEmbGoogle, prefix="/iv_agent_sql_google_embedding", tags=["Haystack"])
+rou.include_router(hsRouSqlEmbGoogle, prefix="/iv_agent_sql_google_embedding", tags=["IV"])
 # rou.include_router(invRou, prefix="/invoice", tags=["Invoice"])
 # rou.include_router(reportRou, prefix="/reports", tags=["Reports"])
 # rou.include_router(syncRouter)

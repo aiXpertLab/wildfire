@@ -1,6 +1,6 @@
 # app/haystack/iv/iv_sql_component.py
 import logging
-from sqlalchemy import select, or_
+from sqlalchemy import select, or_, func
 from haystack import component
 from haystack.dataclasses import Document
 from app.db.db_sync import SessionLocal
@@ -15,22 +15,46 @@ class IVSQLSearchComponent:
     Use for precise filters: account_id, company, first_name, last_name, lead_owner, deal_stage.
     """
 
-    @component.output_types(documents=list[Document])
-    def run(self, query: str, limit: int = 5):
+    @component.output_types(documents=list[Document], count=int)
+    def run(self, query: str, limit: int = 50, count_only: bool = False):
         db = SessionLocal()
         try:
+            # stmt = (
+            #     select(Report)
+            #     .where(
+            #         or_(
+            #             Report.lead_owner.ilike(f"%{query}%"),
+            #             Report.source.ilike(f"%{query}%"),
+            #             Report.deal_stage.ilike(f"%{query}%"),
+            #             Report.account_id == query,
+            #             Report.first_name.ilike(f"%{query}%"),
+            #             Report.last_name.ilike(f"%{query}%"),
+            #             Report.company.ilike(f"%{query}%"),
+            #         )
+            #     )
+            #     .order_by(Report.mdate.desc())
+            #     .limit(limit)
+            # )
+
+
+            filters = or_(
+                Report.lead_owner.ilike(f"%{query}%"),
+                Report.source.ilike(f"%{query}%"),
+                Report.deal_stage.ilike(f"%{query}%"),
+                Report.account_id == query,
+                Report.first_name.ilike(f"%{query}%"),
+                Report.last_name.ilike(f"%{query}%"),
+                Report.company.ilike(f"%{query}%"),
+            )
+            
+            if count_only:
+                stmt = select(func.count()).select_from(Report).where(filters)
+                count = db.execute(stmt).scalar_one()
+                return {"count": count}
+            
             stmt = (
                 select(Report)
-                .where(
-                    or_(
-                        Report.account_id == query,
-                        Report.company.ilike(f"%{query}%"),
-                        Report.first_name.ilike(f"%{query}%"),
-                        Report.last_name.ilike(f"%{query}%"),
-                        Report.lead_owner.ilike(f"%{query}%"),
-                        Report.deal_stage.ilike(f"%{query}%"),
-                    )
-                )
+                .where(filters)
                 .order_by(Report.mdate.desc())
                 .limit(limit)
             )

@@ -63,6 +63,8 @@ agent = Agent(
         "- Use internal_search for semantic or fuzzy meaning-based search.\n"
         "- Use web_search only for fresh external information.\n"
         "If sql_search returns results, prefer them."
+        "Optional argument 'count_only=True' returns the numeric count instead of documents. "
+        "Do NOT use for semantic or vague queries."
     ),
     tools=[
         sql_search_tool,
