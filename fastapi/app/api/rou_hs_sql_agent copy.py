@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 
 from app.components.sql_query import RawSQLQuery
-from app.haystack.rag.sql_agent_service import SQLAgentService
+from app.components.sql_agent_service import SQLAgentService
 from app.haystack.rag.conditional_sql_agent_service import ConditionalSQLAgentService
 from app.haystack.rag.sql_function_agent_service import SQLFunctionAgentService
 from app.schemas.haystack import ResultString, QueryString, ResultList, QueryList

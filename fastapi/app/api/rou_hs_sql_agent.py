@@ -1,17 +1,14 @@
 # app/api/rou_sql_agent.py
 from fastapi import APIRouter, Body
-
-from app.components.sql_query import RawSQLQuery
-from app.haystack.rag.sql_agent_service import SQLAgentService
-from app.haystack.rag.conditional_sql_agent_service import ConditionalSQLAgentService
-from app.haystack.rag.sql_function_agent_service import SQLFunctionAgentService
-from app.schemas.haystack import ResultString, QueryString, ResultList, QueryList
-
-from app.config import get_settings_singleton
-settings = get_settings_singleton()
+from app.components.sql_agent import SQLAgentService
+from app.schemas.haystack import QueryString
 
 hsSqlAgent = APIRouter()
 
+
+
+from app.config import get_settings_singleton
+settings = get_settings_singleton()
 sql_agent = SQLAgentService(settings.PG_SYNC)
 
 
@@ -20,6 +17,6 @@ def run_sql_agent(request: QueryString | None = Body(default=None)):
     question = request.query if request else None
     return sql_agent.run(question)
 # {
-#   "question": "On which days of the week does the average absenteeism time exceed 4 hours"
+#   "query": "On which days of the week does the average absenteeism time exceed 4 hours"
 # }
 
