@@ -1,5 +1,7 @@
 # app/api/rou_sql_agent.py
 from fastapi import APIRouter, Body
+from pydantic import BaseModel
+from typing import List, Optional
 
 from app.components.sql_query import RawSQLQuery
 from app.haystack.rag.sql_agent_service import SQLAgentService
@@ -12,6 +14,7 @@ settings = get_settings_singleton()
 
 hsSqlAgent = APIRouter()
 
+sql_query_component = RawSQLQuery(settings.PG_SYNC)
 sql_agent = SQLAgentService(settings.PG_SYNC)
 
 
@@ -23,3 +26,22 @@ def run_sql_agent(request: QueryString | None = Body(default=None)):
 #   "question": "On which days of the week does the average absenteeism time exceed 4 hours"
 # }
 
+
+conditional_sql_agent = ConditionalSQLAgentService(settings.PG_SYNC)
+
+
+@hsSqlAgent.post("/sql-agent-conditional")
+def run_conditional_sql_agent(payload: QueryList = Body(...)):
+    return conditional_sql_agent.ask(payload.queries)
+
+
+sql_func_agent = SQLFunctionAgentService(settings.PG_SYNC)
+
+
+class SQLFunctionRequest(BaseModel):
+    question: str = "On which days of the week does the average absenteeism time exceed 4 hours?"
+
+
+@hsSqlAgent.post("/sql-agent-function")
+def run_sql_function_agent(payload: SQLFunctionRequest = Body(...)):
+    return sql_func_agent.ask(payload.question)

@@ -52,7 +52,7 @@ class SQLAgentService:
         self.pipeline.connect("prompt", "llm")
         self.pipeline.connect("llm.replies", "sql.queries")
 
-    def ask(self, question: str | None = None):
+    def run(self, question: str | None = None):
         question = question or DEFAULT_QUESTION
 
         result = self.pipeline.run(
