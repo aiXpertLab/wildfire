@@ -9,13 +9,13 @@ from app.components.sql_query import RawSQLQuery
 
 
 ABSENTEEISM_COLUMNS = """
-ID, Reason_for_absence, Month_of_absence, Day_of_the_week,
-Seasons, Transportation_expense, Distance_from_Residence_to_Work,
-Service_time, Age, Work_load_Average_day, Hit_target,
-Disciplinary_failure, Education, Son, Social_drinker,
-Social_smoker, Pet, Weight, Height, Body_mass_index,
-Absenteeism_time_in_hours
-"""
+        ID, Reason_for_absence, Month_of_absence, Day_of_the_week,
+        Seasons, Transportation_expense, Distance_from_Residence_to_Work,
+        Service_time, Age, Work_load_Average_day, Hit_target,
+        Disciplinary_failure, Education, Son, Social_drinker,
+        Social_smoker, Pet, Weight, Height, Body_mass_index,
+        Absenteeism_time_in_hours
+    """
 
 
 class ConditionalSQLAgentService:
@@ -61,16 +61,16 @@ class ConditionalSQLAgentService:
 
         self.fallback_prompt = PromptBuilder(
             template="""
-The user asked a question that cannot be answered using this table.
+                        The user asked a question that cannot be answered using this table.
 
-Question:
-{{ question }}
+                        Question:
+                        {{ question }}
 
-Available columns:
-{{ columns }}
+                        Available columns:
+                        {{ columns }}
 
-Explain clearly why the question cannot be answered.
-"""
+                        Explain clearly why the question cannot be answered.
+                    """
         )
 
         self.fallback_llm = OpenAIGenerator(model="gpt-4o-mini")

@@ -44,28 +44,31 @@ sql_search_tool = ComponentTool(
     component=IVSQLSearchComponent(),
     name="sql_search",
     description=(
-        "Use this tool ONLY for exact, structured queries on reports data. "
-        "Examples: account_id, company, first_name, last_name, lead_owner, "
-        "deal_stage, source, or recent records. "
-        "Do NOT use for semantic similarity or vague questions."
-    ),
-)
+        "Use for exact SQL queries on 'reports' table. "
+        "Available columns: account_id, company, first_name, last_name, lead_owner, "
+        "deal_stage, source, account_balance, created_at, updated_at. "
+        "Examples: "
+        "- 'WHERE first_name = 'John' AND last_name = 'Doe'' "
+        "- 'WHERE deal_stage IN ('prospect', 'negotiation')' "
+        "- 'ORDER BY created_at DESC LIMIT 10'"
+        "Do NOT use for vague or semantic questions."
+    ))
 # ---------------------------------------------------------------------
 # AGENT
 # ---------------------------------------------------------------------
 agent = Agent(
     chat_generator=OpenAIChatGenerator(model="gpt-4o-mini"),
-    system_prompt=(
-        "You are a routing assistant.\n"
-        "Routing rules:\n"
-        "- Use sql_search for EXACT, structured queries on reports "
-        "(ID, first_name, last_name, company, deal_stage, lead_owner, source, account_id, dates).\n"
-        "- Use internal_search for semantic or fuzzy meaning-based search.\n"
-        "- Use web_search only for fresh external information.\n"
-        "If sql_search returns results, prefer them."
-        "Optional argument 'count_only=True' returns the numeric count instead of documents. "
-        "Do NOT use for semantic or vague queries."
-    ),
+    # system_prompt=(
+    #     "You are a routing assistant.\n"
+    #     "Routing rules:\n"
+    #     "- Use sql_search for EXACT, structured queries on reports "
+    #     "(ID, first_name, last_name, company, deal_stage, lead_owner, source, account_id, dates).\n"
+    #     "- Use internal_search for semantic or fuzzy meaning-based search.\n"
+    #     "- Use web_search only for fresh external information.\n"
+    #     "If sql_search returns results, prefer them."
+    #     "Optional argument 'count_only=True' returns the numeric count instead of documents. "
+    #     "Do NOT use for semantic or vague queries."
+    # ),
     tools=[
         sql_search_tool,
         iv_search_tool,
