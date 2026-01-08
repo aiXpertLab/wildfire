@@ -5,7 +5,7 @@ from haystack.components.builders import PromptBuilder
 from haystack.components.generators.openai import OpenAIGenerator
 from haystack.components.routers import ConditionalRouter
 
-from app.haystack.rag.sql_query import SQLQuery
+from app.components.sql_query import RawSQLQuery
 
 
 ABSENTEEISM_COLUMNS = """
@@ -20,7 +20,7 @@ Absenteeism_time_in_hours
 
 class ConditionalSQLAgentService:
     def __init__(self, pg_conn_str: str):
-        self.sql_query = SQLQuery(pg_conn_str)
+        self.sql_query = RawSQLQuery(pg_conn_str)
 
         self.prompt = PromptBuilder(
             template="""

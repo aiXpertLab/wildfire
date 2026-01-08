@@ -7,14 +7,14 @@ from app.haystack.rag.rag_service import RAGService4InMemory
 from app.haystack.rag.pgvector_service import PgVectorSearchService
 
 from app.haystack.rag.pgvector_singleton import get_pgvector_service
-from app.schemas.haystack import ResultString, HumanQuery, ResultList
+from app.schemas.haystack import ResultString, QueryString, ResultList
 
 hsRag = APIRouter()
 
 
 @hsRag.post("/rag_in_memory", response_model=ResultString)
 def ask_rag(
-    payload: HumanQuery,
+    payload: QueryString,
     rag_service: RAGService4InMemory = Depends(get_rag_service_in_memory),
 ):
     answer = rag_service.ask(payload.query)
@@ -24,7 +24,7 @@ def ask_rag(
 
 @hsRag.post("/pgvector_search", response_model=ResultList)
 def search(
-    payload: HumanQuery,
+    payload: QueryString,
     service: PgVectorSearchService = Depends(get_pgvector_service),
 ):
     results = service.search(

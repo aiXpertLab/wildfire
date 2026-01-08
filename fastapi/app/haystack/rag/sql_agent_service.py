@@ -4,7 +4,7 @@ from haystack import Pipeline
 from haystack.components.builders import PromptBuilder
 from haystack.components.generators.openai import OpenAIGenerator
 
-from app.haystack.rag.sql_query import SQLQuery
+from app.components.sql_query import RawSQLQuery
 
 
 DEFAULT_QUESTION = (
@@ -23,7 +23,7 @@ Absenteeism_time_in_hours
 
 class SQLAgentService:
     def __init__(self, pg_conn_str: str):
-        self.sql_executor = SQLQuery(pg_conn_str)
+        self.sql_executor = RawSQLQuery(pg_conn_str)
 
         self.prompt = PromptBuilder(
             template="""

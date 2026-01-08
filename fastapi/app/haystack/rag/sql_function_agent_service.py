@@ -4,7 +4,7 @@ import json
 from haystack.dataclasses import ChatMessage
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.generators.utils import print_streaming_chunk
-from app.haystack.rag.sql_query import SQLQuery
+from app.components.sql_query import RawSQLQuery
 
 ABSENTEEISM_COLUMNS = """
 ID, Reason_for_absence, Month_of_absence, Day_of_the_week,
@@ -18,7 +18,7 @@ Absenteeism_time_in_hours
 class SQLFunctionAgentService:
     def __init__(self, pg_conn_str: str):
         # PostgreSQL connection
-        self.sql_query = SQLQuery(pg_conn_str)
+        self.sql_query = RawSQLQuery(pg_conn_str)
 
         # Wrap SQLQuery component as a function (exactly like your working code)
         def sql_query_func(queries: List[str]):

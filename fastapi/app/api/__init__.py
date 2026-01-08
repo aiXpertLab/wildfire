@@ -11,7 +11,8 @@ from fastapi import APIRouter, Depends
 # from app.api.r_invoice import invRou
 from app.api.rou_hs_agent import hsAgent
 from app.api.rou_hs_rag import hsRag
-from app.api.rou_hs_sql import hsRouSQL
+from app.api.rou_hs_sql_raw import hsSqlRaw
+from app.api.rou_hs_sql_agent import hsSqlAgent
 from app.api.rou_iv1_semantic_search import hsRouSemantic
 from app.api.rou_iv2_agent_dispatch import hsRouDispatch
 from app.api.rou_iv_final import hsRouSqlEmbGoogle
@@ -23,7 +24,8 @@ rou = APIRouter()
 # rou.include_router(userRou)
 rou.include_router(hsRag, prefix="/rag", tags=["Haystack"])
 rou.include_router(hsAgent, prefix="/agent", tags=["Haystack"])
-rou.include_router(hsRouSQL, prefix="/sql", tags=["Haystack"])
+rou.include_router(hsSqlRaw, prefix="/sql-raw", tags=["Haystack_SQL"])
+rou.include_router(hsSqlAgent, prefix="/sql-agent", tags=["Haystack_SQL"])
 rou.include_router(hsRouSemantic, prefix="/semantic_search", tags=["Haystack"])
 rou.include_router(hsRouDispatch, prefix="/iv_agent_dispatch", tags=["Haystack"])
 rou.include_router(hsRouSqlEmbGoogle, prefix="/iv_agent_sql_google_embedding", tags=["IV"])

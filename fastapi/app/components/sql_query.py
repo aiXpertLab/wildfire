@@ -7,7 +7,7 @@ import pandas as pd
 from app.utils.sanitize import clean_sql
 
 @component
-class SQLQuery:
+class RawSQLQuery:
     def __init__(self, pg_conn_str: str):
         self.engine = create_engine(pg_conn_str)
 
