@@ -5,12 +5,7 @@ from app.schemas.haystack import QueryString
 
 hsSqlAgent = APIRouter()
 
-
-
-from app.config import get_settings_singleton
-settings = get_settings_singleton()
-sql_agent = SQLAgentService(settings.PG_SYNC)
-
+sql_agent = SQLAgentService()
 
 @hsSqlAgent.post("/sql-agent-simple", summary="Run 1 SQL Agent Simple")
 def run_sql_agent(request: QueryString | None = Body(default=None)):

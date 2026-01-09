@@ -22,8 +22,8 @@ ABSENTEEISM_COLUMNS = """
 
 
 class SQLAgentService:
-    def __init__(self, pg_conn_str: str):
-        self.sql_executor = RawSQLQuery(pg_conn_str)
+    def __init__(self):
+        self.sql_executor = RawSQLQuery()
 
         self.prompt = PromptBuilder(
             template="""
