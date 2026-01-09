@@ -13,7 +13,7 @@ hsSqlRaw = APIRouter()
 
 sql_query_component = RawSQLQuery(settings.PG_SYNC)
 
-@hsSqlRaw.post("/raw-sql-language")
+@hsSqlRaw.post("/sql-raw", tags=["rou_hs_sql_raw"])
 def run_sql(request: QueryList):
     result = sql_query_component.run(queries=request.queries)
     return {
