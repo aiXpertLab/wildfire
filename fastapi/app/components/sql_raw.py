@@ -1,10 +1,11 @@
 # app/haystack/sql_query.py
 from typing import List
-from haystack import component
-from sqlalchemy import text
 import pandas as pd
-from app.db.db_sync import engine_sync
+from sqlalchemy import text
 
+from haystack import component
+
+from app.db.db_sync import engine_sync
 from app.utils.sanitize import clean_sql
 
 
