@@ -5,7 +5,7 @@ from haystack.components.builders import PromptBuilder
 from haystack.components.generators.openai import OpenAIGenerator
 from haystack.components.routers import ConditionalRouter
 
-from app.components.sql_query import RawSQLQuery
+from app.components.sql_raw import RawSQLQuery
 
 
 ABSENTEEISM_COLUMNS = """

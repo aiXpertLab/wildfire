@@ -4,7 +4,7 @@ import json
 from haystack.dataclasses import ChatMessage
 from haystack.components.generators.chat import OpenAIChatGenerator
 from haystack.components.generators.utils import print_streaming_chunk
-from app.components.sql_query import RawSQLQuery
+from app.components.sql_raw import RawSQLQuery
 
 ABSENTEEISM_COLUMNS = """
 ID, Reason_for_absence, Month_of_absence, Day_of_the_week,

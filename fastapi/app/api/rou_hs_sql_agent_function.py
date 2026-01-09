@@ -3,7 +3,7 @@ from fastapi import APIRouter, Body
 from pydantic import BaseModel
 from typing import List, Optional
 
-from app.components.sql_query import RawSQLQuery
+from app.components.sql_raw import RawSQLQuery
 from app.components.sql_agent_simple import SQLAgentService
 from app.components.sql_agent_conditional import ConditionalSQLAgentService
 from app.components.sql_agent_function import SQLFunctionAgentService
