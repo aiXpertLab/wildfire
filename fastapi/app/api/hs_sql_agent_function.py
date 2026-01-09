@@ -9,16 +9,14 @@ from app.components.sql_agent_conditional import ConditionalSQLAgentService
 from app.components.sql_agent_function import SQLFunctionAgentService
 from app.schemas.haystack import ResultString, QueryString, ResultList, QueryList
 
-from app.config import get_settings_singleton
-settings = get_settings_singleton()
 
 hsSqlAgentFunction = APIRouter()
 
-sql_query_component = RawSQLQuery(settings.PG_SYNC)
-sql_agent = SQLAgentService(settings.PG_SYNC)
+sql_query_component = RawSQLQuery()
+sql_agent = SQLAgentService()
 
 
-sql_func_agent = SQLFunctionAgentService(settings.PG_SYNC)
+sql_func_agent = SQLFunctionAgentService()
 
 
 class SQLFunctionRequest(BaseModel):

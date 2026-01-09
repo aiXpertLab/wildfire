@@ -19,8 +19,8 @@ ABSENTEEISM_COLUMNS = """
 
 
 class ConditionalSQLAgentService:
-    def __init__(self, pg_conn_str: str):
-        self.sql_query = RawSQLQuery(pg_conn_str)
+    def __init__(self):
+        self.sql_query = RawSQLQuery()
 
         self.prompt = PromptBuilder(
             template="""

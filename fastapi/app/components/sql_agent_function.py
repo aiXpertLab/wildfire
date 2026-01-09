@@ -16,9 +16,9 @@ Absenteeism_time_in_hours
 """
 
 class SQLFunctionAgentService:
-    def __init__(self, pg_conn_str: str):
+    def __init__(self):
         # PostgreSQL connection
-        self.sql_query = RawSQLQuery(pg_conn_str)
+        self.sql_query = RawSQLQuery()
 
         # Wrap SQLQuery component as a function (exactly like your working code)
         def sql_query_func(queries: List[str]):
