@@ -4,7 +4,7 @@ from app.haystack.iv.iv_singleton import get_ivservice
 
 
 @component
-class IVSemanticSearchComponent:
+class IVSemanticComponent:
     def __init__(self):
         # Reuse the same singleton used by FastAPI
         self.ivservice = get_ivservice()

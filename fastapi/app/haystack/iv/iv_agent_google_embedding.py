@@ -9,7 +9,7 @@ from haystack.tools import ComponentTool
 from haystack.dataclasses import ChatMessage
 
 from app.config import get_settings_singleton
-from app.haystack.iv.iv_search_component import IVSemanticSearchComponent
+from app.components.iv_semantics_component import IVSemanticComponent
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ search_tool = ComponentTool(
 
 # Internal semantic search tool (wraps IVService.search)
 iv_search_tool = ComponentTool(
-    component=IVSemanticSearchComponent(),
+    component=IVSemanticComponent(),
     name="internal_search",
     description="Search internal company and deal data using vector similarity."
 )
