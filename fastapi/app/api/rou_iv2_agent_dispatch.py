@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from haystack.dataclasses import ChatMessage, Document
 
-from app.haystack.iv.iv_agent import agent
+from app.components.iv_agent_3tools import agent
 
 logger = logging.getLogger(__name__)
 hsRouDispatch = APIRouter()
