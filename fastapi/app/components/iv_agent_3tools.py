@@ -25,7 +25,12 @@ web_search_tool = ComponentTool(
 semantics_search_tool = ComponentTool(
     component=IVSemanticComponent(),
     name="internal_search",
-    description="Search internal company and deal data using vector similarity.",
+    description=(
+        "Search internal company and deal data using vector similarity. "
+        "Use this tool when the user asks questions about patterns, trends, summaries, "
+        "or similarities between deals, lead owners, accounts, or sources. "
+        "Do NOT execute exact SQL or structured filters here."
+    ),
 )
 
 sql_search_tool = ComponentTool(
