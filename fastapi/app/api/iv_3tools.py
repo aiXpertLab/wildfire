@@ -24,9 +24,10 @@ def iv_dispatch(request: QueryString):
 
     return {
         "query": request.query,
+        "route": route,
+        "answer": result["last_message"],
+        "-------------------------------": "-------------------------------",
         # "generated_sql": result["sql"]["queries"][0],
         "generated_sql": result,
         # "msg_history": messages_str,
-        "route": route,
-        "answer": result["last_message"],
     }
