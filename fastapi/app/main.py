@@ -1,3 +1,4 @@
+import os
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -19,8 +20,9 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     settings = get_settings_singleton()
-    # print("--------------DB URL USED:", settings.PG_ASYNC)
-
+    if os.environ.get("SERPERDEV_API_KEY") != settings.SERPERDEV_API_KEY:os.environ["SERPERDEV_API_KEY"] = settings.SERPERDEV_API_KEY
+    if os.environ.get("OPENAI_API_KEY") != settings.OPENAI_API_KEY:      os.environ["OPENAI_API_KEY"] = settings.OPENAI_API_KEY
+    
     app = FastAPI(
         title=settings.PROJECT_NAME,
         version=settings.VERSION,
@@ -28,8 +30,6 @@ def create_app() -> FastAPI:
         redoc_url="/redoc",
         lifespan=lifespan,
     )
-
-    # app.state.settings = settings
 
     # CORS
     app.add_middleware(

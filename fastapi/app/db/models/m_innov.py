@@ -6,8 +6,8 @@ from pgvector.sqlalchemy import Vector
 
 from app.db.models import Base, BaseMixin
 
-class Report(Base, BaseMixin):
-    __tablename__ = "reports"
+class Innov(Base, BaseMixin):
+    __tablename__ = "innov"
     
     __table_args__ = (
         Index("idx_reports_lead_owner", "lead_owner"),

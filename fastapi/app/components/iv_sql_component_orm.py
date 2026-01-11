@@ -4,14 +4,14 @@ from sqlalchemy import select, or_, func
 from haystack import component
 from haystack.dataclasses import Document
 from app.db.db_sync import SessionLocal
-from app.db.models.m_report import Report
+from app.db.models.m_innov import Innov
 
 logger = logging.getLogger(__name__)
 
 @component
-class IVSQLSearchComponent:
+class ORMComponent:
     """
-    EXACT lookup on reports table.
+    EXACT lookup on innov table.
     Use for precise filters: account_id, company, first_name, last_name, lead_owner, deal_stage.
     """
 
@@ -19,43 +19,25 @@ class IVSQLSearchComponent:
     def run(self, query: str, limit: int = 50, count_only: bool = False):
         db = SessionLocal()
         try:
-            # stmt = (
-            #     select(Report)
-            #     .where(
-            #         or_(
-            #             Report.lead_owner.ilike(f"%{query}%"),
-            #             Report.source.ilike(f"%{query}%"),
-            #             Report.deal_stage.ilike(f"%{query}%"),
-            #             Report.account_id == query,
-            #             Report.first_name.ilike(f"%{query}%"),
-            #             Report.last_name.ilike(f"%{query}%"),
-            #             Report.company.ilike(f"%{query}%"),
-            #         )
-            #     )
-            #     .order_by(Report.mdate.desc())
-            #     .limit(limit)
-            # )
-
-
             filters = or_(
-                Report.lead_owner.ilike(f"%{query}%"),
-                Report.source.ilike(f"%{query}%"),
-                Report.deal_stage.ilike(f"%{query}%"),
-                Report.account_id == query,
-                Report.first_name.ilike(f"%{query}%"),
-                Report.last_name.ilike(f"%{query}%"),
-                Report.company.ilike(f"%{query}%"),
+                Innov.lead_owner.ilike(f"%{query}%"),
+                Innov.source.ilike(f"%{query}%"),
+                Innov.deal_stage.ilike(f"%{query}%"),
+                Innov.account_id == query,
+                Innov.first_name.ilike(f"%{query}%"),
+                Innov.last_name.ilike(f"%{query}%"),
+                Innov.company.ilike(f"%{query}%"),
             )
             
             if count_only:
-                stmt = select(func.count()).select_from(Report).where(filters)
+                stmt = select(func.count()).select_from(Innov).where(filters)
                 count = db.execute(stmt).scalar_one()
                 return {"count": count}
             
             stmt = (
-                select(Report)
+                select(Innov)
                 .where(filters)
-                .order_by(Report.mdate.desc())
+                .order_by(Innov.mdate.desc())
                 .limit(limit)
             )
 
