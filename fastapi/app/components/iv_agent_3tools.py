@@ -1,5 +1,6 @@
 # hs.py
-import os, logging
+import os
+import logging
 
 from haystack.components.agents import Agent
 from haystack.components.generators.chat import OpenAIChatGenerator
@@ -40,7 +41,10 @@ sql_search_tool = ComponentTool(
         "Execute exact SQL queries against the 'innov' table. "
         "Use ONLY when the user question can be answered with structured filters. "
         "Table: innov. "
-        "Columns: account_id, company, first_name, last_name, lead_owner, deal_stage, source. "
+        "Columns: account_id, date, company, first_name, last_name, lead_owner, deal_stage, source. "
+        "Use 'date' for any deal creation or time-based filtering."
+        "❌ DO NOT invent or rename columns."
+        "❌ 'deal_created_date' does NOT exist."
         "Input must be valid SQL. Do not use for semantic or fuzzy search."
     ),
 )
