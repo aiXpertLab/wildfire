@@ -36,18 +36,7 @@ def get_item(item_id: int):
 
 @app.get("/", response_class=HTMLResponse)
 def read_root():
-    return """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>Wildfire</title>
-    </head>
-    <body>
-        <h1>Welcome to Wildfire</h1>
-        <p>This is a sample FastAPI application.</p>
-    </body>
-    </html>
-    """
+    return """        <h1>Welcome to Wildfire</h1>    """
 
 
 if __name__ == "__main__":
