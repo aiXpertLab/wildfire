@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 
 from app.api.r_report import reportRou
+from app.api.r_wage import wageRou
 
 
 from app.api.rou_hs_agent import hsAgent
@@ -31,3 +32,4 @@ rou.include_router(hsSqlAgentFunction, prefix="/sql", tags=["Haystack_SQL"])
 rou.include_router(iv3Tools, prefix="/iv3tools", tags=["IV"])
 
 rou.include_router(reportRou, prefix="/reports", tags=["Reports"])
+rou.include_router(wageRou, prefix="/wages", tags=["Wages"])
