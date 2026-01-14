@@ -32,21 +32,15 @@ async def list_reports(
 
 
 @wageRou.get("/pagination")
-async def list_reports(
+async def list_wages(
     db: AsyncSession = Depends(get_db),
     page: int = Query(1, ge=1),
     page_size: int = Query(10, le=100),
-    query: str | None = None,
-    sort_by: str = "created_at",
-    sort_order: str = "desc",
 ):
-    return await WageService.reports_pagination(
+    return await WageService.list_paginated(
         db=db,
         page=page,
         page_size=page_size,
-        query=query,
-        sort_by=sort_by,
-        sort_order=sort_order,
     )
     
     
