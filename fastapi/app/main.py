@@ -26,8 +26,8 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title=settings.PROJECT_NAME,
         version=settings.VERSION,
-        docs_url="/",
-        redoc_url="/redoc",
+        docs_url="/swagger",
+        redoc_url="/swagger_redoc",
         lifespan=lifespan,
     )
 
