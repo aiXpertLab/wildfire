@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from app.config import get_settings_singleton
 # from app.core.logging import setup_logger
 # from app.db.db_async import async_engine
-# from app.api import rou
+from app.api import rou
 
 # setup_logger()
 
@@ -42,6 +42,6 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    # app.include_router(rou)
+    app.include_router(rou)
 
     return app
